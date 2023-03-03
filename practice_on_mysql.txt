@@ -1,0 +1,224 @@
+-------------------------
+1.Inner Join on 2 Tables|
+-------------------------
+
+mysql> select * from test1;
++------+--------+---------+-------+
+| id   | name   | address | zip   |
++------+--------+---------+-------+
+|    1 | aqeeb  | a       |  1213 |
+|    1 | fatha  | b       |  7879 |
+|    1 | akash  | c       | 78979 |
+|    1 | faizan | d       |  7799 |
+|    1 | javed  | e       |  8798 |
++------+--------+---------+-------+
+5 rows in set (0.07 sec)
+
+mysql> select* from test2;
++------+--------+-----------+---------+--------+
+| id   | name   | mobile_no | city    | state  |
++------+--------+-----------+---------+--------+
+|    1 | aqeeb  |  76767878 | bjp     | kar    |
+|    2 | fatha  | 789789789 | blg     | maha   |
+|    3 | akash  | 767863251 | bang    | sikkim |
+|    4 | faizan |  63165621 | raichur | bengal |
+|    5 | javed  |  24555672 | ibrahim | haveli |
++------+--------+-----------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT test1.address, test2.mobile_no FROM test1 INNER JOIN test2 on test1.id = test2.id;
++---------+-----------+
+| address | mobile_no |
++---------+-----------+
+| e       |  76767878 |
+| d       |  76767878 |
+| c       |  76767878 |
+| b       |  76767878 |
+| a       |  76767878 |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+------------------------
+1.LEFT Join on 2 Tables|
+------------------------
+mysql> SELECT test1.address, test2.mobile_no FROM test1 LEFT JOIN test2 on test1.id = test2.id ORDER BY test1.address;
++---------+-----------+
+| address | mobile_no |
++---------+-----------+
+| a       |  76767878 |
+| b       |  76767878 |
+| c       |  76767878 |
+| d       |  76767878 |
+| e       |  76767878 |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+-------------------------
+1.RIGHT Join on 2 Tables|
+-------------------------
+
+mysql> SELECT test1.address, test2.mobile_no FROM test1 RIGHT JOIN test2 on test1.id = test2.id ORDER BY test2.mobile_no;
++---------+-----------+
+| address | mobile_no |
++---------+-----------+
+| NULL    |  24555672 |
+| NULL    |  63165621 |
+| e       |  76767878 |
+| d       |  76767878 |
+| c       |  76767878 |
+| b       |  76767878 |
+| a       |  76767878 |
+| NULL    | 767863251 |
+| NULL    | 789789789 |
++---------+-----------+
+9 rows in set (0.00 sec)
+
+
+
+
+
+-------------------------
+1.CROSS Join on 2 Tables|
+-------------------------
+
+
+
+
+mysql> SELECT test1.address, test2.mobile_no FROM test1 CROSS JOIN test2;
++---------+-----------+
+| address | mobile_no |
++---------+-----------+
+| e       |  76767878 |
+| d       |  76767878 |
+| c       |  76767878 |
+| b       |  76767878 |
+| a       |  76767878 |
+| e       | 789789789 |
+| d       | 789789789 |
+| c       | 789789789 |
+| b       | 789789789 |
+| a       | 789789789 |
+| e       | 767863251 |
+| d       | 767863251 |
+| c       | 767863251 |
+| b       | 767863251 |
+| a       | 767863251 |
+| e       |  63165621 |
+| d       |  63165621 |
+| c       |  63165621 |
+| b       |  63165621 |
+| a       |  63165621 |
+| e       |  24555672 |
+| d       |  24555672 |
+| c       |  24555672 |
+| b       |  24555672 |
+| a       |  24555672 |
++---------+-----------+
+25 rows in set (0.00 sec)
+
+
+
+
+
+--------------------
+1.UNION on 2 Tables|
+--------------------
+
+mysql> select name from test1 union select name from test2 order by name;
++--------+
+| name   |
++--------+
+| akash  |
+| aqeeb  |
+| faizan |
+| fatha  |
+| javed  |
++--------+
+5 rows in set (0.06 sec)
+
+
+
+
+
+--------------------
+1.UNION on 2 Tables|
+--------------------
+
+mysql> select name from test1 union all select name from test2 order by name;
++--------+
+| name   |
++--------+
+| akash  |
+| akash  |
+| aqeeb  |
+| aqeeb  |
+| faizan |
+| faizan |
+| fatha  |
+| fatha  |
+| javed  |
+| javed  |
++--------+
+10 rows in set (0.00 sec)
+
+
+
+
+
+
+-------------------
+Ceating UNIQUE key|
+-------------------
+
+mysql> use test_mysql;
+Database changed
+mysql> create table test1(id int NOT NULL,name varchar(30) NOT NULL,address varchar(30),age int,UNIQUE (id));
+Query OK, 0 rows affected (1.98 sec)
+
+mysql> insert into test1 values(1,"aqeeb","bjp",27);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into test1 values(1,"akash","vjp",25);
+ERROR 1062 (23000): Duplicate entry '1' for key 'test1.id'
+
+mysql> insert into test1 values(2,"akash","vjp",25);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> select * from test1;
++----+-------+---------+------+
+| id | name  | address | age  |
++----+-------+---------+------+
+|  1 | aqeeb | bjp     |   27 |
+|  2 | akash | vjp     |   25 |
++----+-------+---------+------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
